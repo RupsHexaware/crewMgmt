@@ -4,8 +4,11 @@ import TransprtNavbar from "../../components/navbar/TransportNavbar";
 import "./home.scss";
 import Widget from "../../components/widget/Widget";
 import Table from "../../components/table/Table";
+import { useTranslation } from "react-i18next";
+
 
 const Home = () => {
+  const {t} = useTranslation();
   let user = JSON.parse(localStorage.getItem('user'));
   //console.log(user)
   return (
@@ -20,7 +23,7 @@ const Home = () => {
           <Widget type="earning" /> */}
         </div>
         <div className="listContainer">
-          <div className="listTitle">Latest Taxi Driver Registered</div>
+          <div className="listTitle">{t("trlistHometitle")}</div>
           {/* <Table /> */}
         </div>
       </div>

@@ -5,6 +5,16 @@ const AuthReducer = (state, action) => {
         currentUser: action.payload,
       };
     }
+    case "LOGINAIRLINE": {
+      return {
+        currentUser: action.payload,
+      };
+    }
+    case "LOGINTRANSPORT": {
+      return {
+        currentUser: action.payload,
+      };
+    }
     case "LOGOUT": {
       return {
         currentUser: null,

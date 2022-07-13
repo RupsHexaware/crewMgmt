@@ -37,7 +37,7 @@ const Datatable = () => {
 
     // LISTEN (REALTIME)
     const unsub = onSnapshot(
-      collection(db, "crewDetails"),
+      collection(db, "rosterDetails"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
@@ -57,7 +57,7 @@ const Datatable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "crewDetails", id));
+      await deleteDoc(doc(db, "rosterDetails", id));
       setData(data.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
@@ -73,8 +73,7 @@ const Datatable = () => {
         return (
           <div className="cellAction">
             <Link to={`/airline/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton" onClick={() => seteditBox(true)}>Edit</div>
-              {editBox === true && <Edituser userData={data} seteditBox = {seteditBox} inputs={userInputs} title="Edit User"/>}
+              <div className="viewButton">Edit</div>
             </Link>
             <div
               className="deleteButton"
@@ -91,7 +90,7 @@ const Datatable = () => {
     {
       field: "route",
       headerName: "Flight Route",
-      width: 160,
+      width: 200,
       renderCell: (params) => {
         return (
           <div>
@@ -101,18 +100,32 @@ const Datatable = () => {
       },
     },
   ]
+  const dateColumn = [
+    {
+      field: "date",
+      headerName: "Flight Date & Time",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div>
+            {params.row.date}-{params.row.arrivalTime}
+          </div>
+        );
+      },
+    },
+  ]
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New Crew
-        <Link to="/airline/newCrew" className="link">
+        View Crew
+        {/*="/airline/newCrew" className="link">
           Add New
-        </Link>
+        </Link> */}
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={crewColumns.concat(statusColumn,actionColumn)}
+        columns={crewColumns.concat(statusColumn,dateColumn,actionColumn)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection

@@ -1,4 +1,4 @@
-import Sidebar from "../../components/sidebar/AirlineSidebar";
+import Sidebar from "../../components/sidebar/TransportSidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
@@ -15,17 +15,17 @@ import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate, useParams} from "react-router-dom";
 import FormInput from "../../commonInput/FormInput";
-import FormButton from "../../commonInput/FormButtons"
-import Dropdown from "../../commonInput/FormDropdown";
+import FormButton from "../../commonInput/FormButtons";
 
-
-const NewCrewMembers = ({ inputs, title }) => {
+const NewCabDriver = ({ inputs, title }) => {
   const { crewId } = useParams();
   const [file, setFile] = useState("");
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    firstName: "",
+  });
   const [per, setPerc] = useState(null);
   const [userData, setUserData] = useState([]);
-  const [isFound , setisFound] = useState({});
+  const [assignedCab , setassignedCab] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,33 +76,11 @@ const NewCrewMembers = ({ inputs, title }) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    const res1 = onSnapshot(
-      collection(db, "rosterDetails"),
-      (snapShot) => {
-        let list = [];
-        snapShot.docs.forEach((doc) => {
-          console.log(doc.id)
-         if(doc.id === crewId){
-          const newDoc = doc.data();
-          //list.push({ id: doc.id, ...doc.data() });
-          //setFlightNo(newDoc.flightNo);
-          setUserData(doc.data());
-          //console.log(doc.data());
-         }
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
     try {
       const id = uuidv4();
-      //console.log(flightNo)
-      const res = await setDoc(doc(db, "crewMembers",id), {
+      //console.log(file)
+      const res = await setDoc(doc(db, "cabDrivers",id), {
         ...data,
-        flightNo : userData.flightNo,
-        crewId : crewId,
-        status:"Active",
         timeStamp: serverTimestamp(),
       });
       navigate(-1)
@@ -144,21 +122,22 @@ const NewCrewMembers = ({ inputs, title }) => {
                 />
               </div>
               {inputs.map((input) => (
-                  <FormInput
+                    <FormInput
                     key={input.id}
                     {...input}
                     value={data[input.name]}
                     onChange={handleInput}
                   />
               ))}
-              {/* <button type="submit" class="btn">Save</button> */}
-              {/* <Dropdown  id={"ddl1"}
-                  name={"ddllocation"}
-                  options={userData.flightNo}
-                  title={"Locations"}
-                  handleChange={handleInput}
-                  selectedValue={isFound}
-              /> */}
+              {/* //<button >Save</button> */}
+              <div className="formInput">
+                <label>Status</label>
+                <select className="mt-4" id="assignedCab" value={assignedCab.value} onChange={handleInput}>
+                  <option value="Select Value">Select Value</option>
+                  <option value="Active" Selected>Active</option>
+                  <option value="In Active">In Active</option>
+                </select>
+              </div>
               <FormButton type="submit">Save</FormButton>
             </form>
           </div>
@@ -168,4 +147,4 @@ const NewCrewMembers = ({ inputs, title }) => {
   );
 };
 
-export default NewCrewMembers;
+export default NewCabDriver;

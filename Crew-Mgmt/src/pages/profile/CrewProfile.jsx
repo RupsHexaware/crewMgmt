@@ -10,8 +10,10 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
+  const { t } = useTranslation();
   let user = JSON.parse(localStorage.getItem('user'));
   //console.log(user.email)
   const [data, setData] = useState({});
@@ -48,7 +50,7 @@ const Profile = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <h1 className="title">Information</h1>
+          <h1 className="title">{t("CrProfile")}</h1>
             <div className="item">
               <img
                 src={data.img}
@@ -58,19 +60,19 @@ const Profile = () => {
               <div className="details">
                 <h1 className="itemTitle">{data.displayName}</h1>
                 <div className="detailItem">
-                  <span className="itemKey">Email:</span>
+                  <span className="itemKey">{t("email")}:</span>
                   <span className="itemValue">{user.email}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Phone:</span>
+                  <span className="itemKey">{t("phone")}:</span>
                   <span className="itemValue">{data.phone}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Country:</span>
+                  <span className="itemKey">{t("country")}:</span>
                   <span className="itemValue">{data.country}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Role:</span>
+                  <span className="itemKey">{t("role")}:</span>
                   <span className="itemValue">{data.role}</span>
                 </div>
               </div>

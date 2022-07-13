@@ -1,5 +1,6 @@
 
 import { DataGrid ,GridToolbar} from "@mui/x-data-grid";
+import { LinearProgress } from "@mui/material";
 import { RoasterColumns } from "../../datatablesource";
 import { Link ,useParams} from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -16,10 +17,11 @@ import { db } from "../../firebase";
 const ViewRoster = () => {
     const { crewId } = useParams()
   const [data, setData] = useState([]);
+  const [showZebraRows, setShowZebraRows] = useState(true)
 //console.log(crewId)
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "crewDetails"),
+      collection(db, "rosterDetails"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
@@ -42,44 +44,22 @@ const ViewRoster = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "crewMembers", id));
+      await deleteDoc(doc(db, "rosterDetails", id));
       setData(data.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
     }
   };
 
-  const actionColumn = [
+  const dateColumn = [
     {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            {/* <Link to={`/users/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton">Edit</div>
-           </Link> */}
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
-  const statusColumn = [
-    {
-      field: "status",
-      headerName: "Status",
+      field: "date",
+      headerName: "Flight Date",
       width: 160,
       renderCell: (params) => {
         return (
           <div>
-            {params.row.departure} - {params.row.arrival}
+            {params.row.date}
           </div>
         );
       },
@@ -100,11 +80,20 @@ const ViewRoster = () => {
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
-        components={{ Toolbar: GridToolbar }}
+        components={{ Toolbar: GridToolbar
+        }}
         componentsProps={{
             toolbar: {
                 showQuickFilter: true,
                 quickFilterProps: { debounceMs: 500 },
+            },
+          }}
+          sx={{
+            boxShadow: 2,
+            border: 2,
+            borderColor: 'primary.light',
+            '& .MuiDataGrid-cell:hover': {
+              color: 'primary.main',
             },
           }}
       />

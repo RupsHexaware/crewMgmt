@@ -1,13 +1,17 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import EmojiTransportationIcon from '@mui/icons-material/EmojiTransportation';
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link, useNavigate} from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const TransportSidebar = () => {
+  const {t} = useTranslation();
   let user = JSON.parse(localStorage.getItem('user'));
   //console.log(user)
   const { dispatch } = useContext(DarkModeContext);
@@ -15,47 +19,47 @@ const TransportSidebar = () => {
   const handleLogout = (e) =>{
     e.preventDefault();
     localStorage.clear();
-    navitage('/login')
+    navitage('/')
   }
   return (
     <div className="sidebar">
       <div className="top">
         <Link to="/transport" style={{ textDecoration: "none" }}>
-          <span className="logo">Transport Admin</span>
+          <span className="logo">{t("trLogo")}</span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
+          <p className="title">{t("main")}</p>
           <Link to="/transport" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
-            <span>Dashboard</span>
+            <span>{t("dashboard")}</span>
           </li>
           </Link>
-          <p className="title">LISTS</p>
-          <Link to="/transport/CabProviders" style={{ textDecoration: "none" }}>
+          <p className="title">{t("lists")}</p>
+          <Link to="/transport/CabDrivers" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
-              <span>Manage Drivers</span>
+              <span>{t("mngDr")}</span>
             </li>
           </Link>
-          {/*<Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/transport/cabDetails" style={{ textDecoration: "none" }}>
              <li>
-              <StoreIcon className="icon" />
-              <span>Products</span>
+              <DirectionsCarIcon className="icon" />
+              <span>{t("viCbdtls")}</span>
             </li>
           </Link>
           <li>
-            <CreditCardIcon className="icon" />
-            <span>Orders</span>
+            <EmojiTransportationIcon className="icon" />
+            <span>{t("logArngmt")}</span>
           </li>
-          <li>
+          {/* <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
           </li> */}
-          <p className="title">USEFUL</p>
+          <p className="title">{t("usful")}</p>
           {/* <li>
             <InsertChartIcon className="icon" />
             <span>Stats</span>
@@ -77,20 +81,23 @@ const TransportSidebar = () => {
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li> */}
-          <p className="title">USER</p>
+          <p className="title">{t("user")}</p>
           <Link to="/transport/transportProfile" style={{ textDecoration: "none" }}>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
+            <span>{t("prfl")}</span>
           </li>
           </Link>
           <li>
             <ExitToAppIcon className="icon" />
-            <span onClick={handleLogout}>Logout</span>
+            <span onClick={handleLogout}>{t("logout")}</span>
           </li>
+          <p className="title">{t("theme")}</p>
         </ul>
+        
       </div>
-      <div className="bottom">
+      
+      <div className="bottom"> 
         <div
           className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}

@@ -88,30 +88,15 @@ const  u = {
 export const crewColumns = [
   { field: "id", headerName: "ID", width: 100, hide: true},
   {
-    field: "airline",
-    headerName: "Airline",
-    width: 150,
-  },
-  {
     field: "flightNo",
     headerName: "Flight No",
-    width: 150,
+    width: 200,
   },
   {
-    field: "members",
+    field: "crewMembers",
     headerName: "Crew Members",
-    width: 150,
+    width: 200,
   },
-  {
-    field: "flightDate",
-    headerName: "Flight Date",
-    width: 150,
-  },
-  {
-    field: "flightArrivalTime",
-    headerName: "Flight Time",
-    width: 150,
-  }
 ];
 
 export const RoasterColumns = [
@@ -131,24 +116,80 @@ export const RoasterColumns = [
     width: 150,
   },
   {
-    field: "members",
+    field: "crewMembers",
     headerName: "Crew Members",
     width: 150,
   },
   {
-    field: "flightDate",
+    field: "date",
     headerName: "Date",
     width: 150,
   },
   {
-    field: "flightDepartureTime",
+    field: "departureTime",
     headerName: "Departure Time",
     width: 150,
   },
   {
-    field: "flightArrivalTime",
+    field: "arrivalTime",
     headerName: "Arrival Time",
     width: 150,
   },
 
 ];
+
+export const driverColumns = [
+  {
+    field: "firstName",
+    headerName: "Driver Name",
+    width: 150,
+  },
+  {
+    field: "userId",
+    headerName: "User Id",
+    width: 150,
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 150,
+  },
+  {
+    field: "primaryNo",
+    headerName: "Contact No",
+    width: 150,
+  },
+  {
+    field: "serviceArea",
+    headerName: "Service Area",
+    width: 150,
+  },
+  {
+    field: "cabAssigned",
+    headerName: "Assigned Cab",
+    width: 150,
+  },
+]
+
+export const cabColumns = [
+  {
+    field: "regNo",
+    headerName: "Registration No",
+    width: 150,
+  },
+  {
+    field: "category",
+    headerName: "Category",
+    width: 150,
+  },
+  {
+    field: "noOfSeats",
+    headerName: "No Of Seats",
+    width: 150,
+  },
+  {
+    field: "assignedDriver",
+    headerName: "Driver Assigned",
+    width: 150,
+  },
+]

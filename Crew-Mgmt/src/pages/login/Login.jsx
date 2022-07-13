@@ -13,7 +13,9 @@ import { signInWithEmailAndPassword  } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate, Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext"
-import image from '../../image/airport.jpg'
+import image from '../../image/airport.jpg';
+import FormInput from "../../commonInput/FormInput";
+import FormButton from '../../commonInput/FormButtons';
 
 const Login = ({ inputs, title }) => {
   const [error, setError] = useState(false);
@@ -25,7 +27,7 @@ const Login = ({ inputs, title }) => {
   //console.log(data);
 
   const handleInput = (e) => {
-    const id = e.target.id;
+    const id = e.target.name;
     const value = e.target.value;
     setData({ ...data, [id]: value });
   };
@@ -45,15 +47,15 @@ const Login = ({ inputs, title }) => {
                 //alert("Approved");
                 if(newDoc.role === "Transport Admin"){
                   //alert("transport Admin")
-                  dispatch({type:"LOGIN", payload:user})
+                  dispatch({type:"LOGINTRANSPORT", payload:user})
                   navigate("/transport")
                 }else if(newDoc.role === "Crew Admin"){
                   //alert("crew Admin")
-                  dispatch({type:"LOGIN", payload:user})
+                  dispatch({type:"LOGINAIRLINE", payload:user})
                   navigate("/airline")
                 }else{
                   dispatch({type:"LOGIN", payload:user})
-                  navigate("/")
+                  navigate("/home")
                 }
               }else{
                 console.log("User Not Approved")
@@ -85,25 +87,24 @@ const Login = ({ inputs, title }) => {
             <form onSubmit={handlelogin}>
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
-                  <input
-                    id={input.id}
-                    type={input.type}
-                    placeholder={input.placeholder}
+                  <FormInput
+                    {...input}
+                    value={data[input.name]}
                     onChange={handleInput}
                   />
                 </div>
               ))}
-              <button type="submit">
+              {/* <button type="submit">
                 Submit
-              </button>
-              <p className="eror">{error && <span>Wrong email or password!</span>}</p>
-              <p><Link to='/forgotPassword'style={{ textDecoration: "none" }}><span>Forgot Password ?</span></Link></p>
+              </button> */}
+              <FormButton type="submit">Submit</FormButton>
+              <div className="eror">{error && <a>Wrong email or password!</a>}</div>
+              <p><Link to='/forgotPassword'style={{ textDecoration: "none" }}>Forgot Password ?</Link></p>
               {/* <input type="checkbox" label="Remember Me"/> */}
               <p>New User.?</p>
-              <button><Link to='/register' style={{ textDecoration: "none" ,color:'white'}}>
+              <FormButton><Link to='/register' style={{ textDecoration: "none" ,color:'white'}}>
                 Sign Up</Link>
-              </button>
+              </FormButton>
               
             </form>
           </div>

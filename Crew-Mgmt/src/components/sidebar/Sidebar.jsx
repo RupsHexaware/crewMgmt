@@ -6,8 +6,10 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link, useNavigate} from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
+  const {t} = useTranslation();
   let user = JSON.parse(localStorage.getItem('user'));
   //console.log(user)
   const { dispatch } = useContext(DarkModeContext);
@@ -15,30 +17,30 @@ const Sidebar = () => {
   const handleLogout = (e) =>{
     e.preventDefault();
     localStorage.clear();
-    navitage('/login')
+    navitage('/')
   }
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Super Admin</span>
+        <Link to="/home" style={{ textDecoration: "none" }}>
+          <span className="logo">{t("logo")}</span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <p className="title">{t("main")}</p>
+          <Link to="/home" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
-            <span>Dashboard</span>
+            <span>{t("dashboard")}</span>
           </li>
           </Link>
-          <p className="title">LISTS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
+          <p className="title">{t("lists")}</p>
+          <Link to="/home/users" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
-              <span>Users</span>
+              <span>{t("users")}</span>
             </li>
           </Link>
           {/*<Link to="/products" style={{ textDecoration: "none" }}>
@@ -55,7 +57,7 @@ const Sidebar = () => {
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
           </li> */}
-          <p className="title">USEFUL</p>
+          <p className="title">{t("usful")}</p>
           {/* <li>
             <InsertChartIcon className="icon" />
             <span>Stats</span>
@@ -77,17 +79,18 @@ const Sidebar = () => {
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li> */}
-          <p className="title">USER</p>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
+          <p className="title">{t("user")}</p>
+          <Link to="/home/profile" style={{ textDecoration: "none" }}>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
+            <span>{t("prfl")}</span>
           </li>
           </Link>
           <li>
             <ExitToAppIcon className="icon" />
-            <span onClick={handleLogout}>Logout</span>
+            <span onClick={handleLogout}>{t("logout")}</span>
           </li>
+          <p className="title">{t("theme")}</p>
         </ul>
       </div>
       <div className="bottom">

@@ -1,15 +1,4 @@
 
-const required = (value) => {
-  //alert("Ss")
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
-
 export const userInputs = [
     {
       id: "username",
@@ -40,12 +29,12 @@ export const userInputs = [
       type: "text",
     },
     {
-      id: "Active From",
+      id: "activefrom",
       label: "Active From",
       type: "date",
     }, 
     {
-      id: "Active TO",
+      id: "activeTo",
       label: "Active To",
       type: "date",
     },  
@@ -85,16 +74,24 @@ export const userInputs = [
   export const loginInputs = [
     {
       id: "email",
-      label: "Username",
+      name: "email",
       type: "email",
       placeholder: "Email",
-    },  
+      errorMessage: "It should be a valid email address!",
+      label: "Email",
+      required: true,
+    },
     {
       id: "password",
-      label: "Password",
+      name: "password",
       type: "password",
       placeholder: "Password",
-    },  
+      errorMessage:
+        "Password should be Required",
+      label: "Password",
+      //pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+      required: true,
+    },
   ]
 
   export const resetInputs = [
@@ -272,4 +269,163 @@ export const userInputs = [
       type: "text",
       placeholder: "Additional Requirements",
     },  
+  ]
+
+  export const cabDriversInputs = [
+    {
+      id: "firstName",
+      name : "firstName",
+      type: "text",
+      placeholder: "First Name",
+      errorMessage:
+      "First Name should be 3-16 characters and shouldn't include any special character!",
+      label: "First Name",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    },
+    {
+      id: "lastName",
+      name : "lastName",
+      type: "text",
+      placeholder: "Last Name",
+      errorMessage:
+      "Last Name should be 3-16 characters and shouldn't include any special character!",
+      label: "Last Name",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    },  
+    {
+      id: "birthDate",
+      name : "birthDate",
+      type: "date",
+      //placeholder: "Arrival To",
+      errorMessage:
+      " This field is Required !",
+      label: "Birth Date",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
+    }, 
+    {
+      id: "userId",
+      name : "userId",
+      type: "text",
+      placeholder: "User ID",
+      errorMessage:
+      "User ID should be Alphanumeric ",
+      label: "User ID",
+      pattern: "^[A-Z0-9]{0,8}$",
+      required: true,
+    }, 
+    {
+      id: "gender",
+      name : "gender",
+      type: "text",
+      placeholder: "Gender",
+      errorMessage:
+      " This field is Required!",
+      label: "Gender",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    },  
+    {
+      id: "status",
+      name : "status",
+      type: "text",
+      placeholder: "Status",
+      errorMessage:
+      " This field is Required and only characters !",
+      label: "Status",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+      
+    },
+    {
+      id: "primaryNo",
+      name : "primaryNo",
+      type: "text",
+      placeholder: "Primary Number",
+      errorMessage:
+      " This field is Required and only Numbers !",
+      label: "1st Number",
+      pattern: "^[0-9]{10}$",
+      required: true,
+    },  
+    {
+      id: "serviceArea",
+      name : "serviceArea",
+      type: "text",
+      placeholder: "Service Area",
+      errorMessage:
+      " This field is Required and only characters !",
+      label: "Service Area",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    }, 
+    {
+      id: "secondaryNo",
+      name : "secondaryNo",
+      type: "text",
+      placeholder: "Secondary Number",
+      errorMessage:
+      " This field is Required and only Numbers !",
+      label: "2nd Number",
+      pattern: "^[0-9]{10}$",
+      //required: true,
+    },
+    {
+      id: "email",
+      name : "email",
+      type: "email",
+      placeholder: "Email",
+      errorMessage:
+      " This field is Required !",
+      label: "Email",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
+    }, 
+    {
+      id: "address",
+      name : "address",
+      type: "text",
+      placeholder: "Address",
+      errorMessage:
+      " This field is Required !",
+      label: "Address",
+      //pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{3,16}$",
+      required: true,
+    }, 
+    {
+      id: "city",
+      name : "city",
+      type: "text",
+      placeholder: "City",
+      errorMessage:
+      " This field is Required!",
+      label: "City",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    }, 
+    {
+      id: "state",
+      name : "state",
+      type: "text",
+      placeholder: "State",
+      errorMessage:
+      " This field is Required!",
+      label: "State",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    }, 
+    {
+      id: "pinCode",
+      name : "pinCode",
+      type: "text",
+      placeholder: "Pin Code",
+      errorMessage:
+      " This field is Required and only Numbers !",
+      label: "Address",
+      pattern: "^[0-9]{6}$",
+      required: true,
+    }, 
+    
   ]

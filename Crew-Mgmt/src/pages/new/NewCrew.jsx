@@ -15,6 +15,7 @@ import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate} from "react-router-dom";
 import FormInput from "../../commonInput/FormInput";
+import "./new.scss"
 
 const NewCrew = ({ inputs, title }) => {
   const [data, setData] = useState({
@@ -57,13 +58,12 @@ const NewCrew = ({ inputs, title }) => {
             <form onSubmit={handleAdd}>
 
               {inputs.map((input) => (
-                <div className="formInput" key={input.id}>
                   <FormInput
+                    key={input.id}
                     {...input}
                     value={data[input.name]}
                     onChange={handleInput}
                   />
-                </div>
               ))}
               <button type="submit" class="btn">Save</button>
             </form>

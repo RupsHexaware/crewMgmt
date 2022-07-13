@@ -85,9 +85,10 @@ const New = ({ inputs, title }) => {
         userid: userid,
         timeStamp: serverTimestamp(),
         password:password,
-        role: "NA"
+        //role: "NA"
       });
-      navigate(-1)
+      //navigate("/home/users")
+      alert("User Registred Succesfully..!")
     } catch (err) {
       console.log(err);
     }

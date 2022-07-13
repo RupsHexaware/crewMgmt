@@ -3,13 +3,12 @@ import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import AirlineList from "./pages/list/AirlineList"
 import CrewMemberList from "./pages/list/CrewMemberList";
-import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import NewCrew from "./pages/new/NewCrew"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { crewInputs, crewMemberInputs,userInputs ,forgotInputs ,loginInputs,resetInputs,userEditInputs} from "./formSource";
+import { crewInputs, cabDriversInputs,crewMemberInputs,userInputs ,forgotInputs ,loginInputs,resetInputs,userEditInputs} from "./formSource";
 import "./style/dark.scss";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import Profile from "./pages/profile/Profile";
@@ -24,29 +23,85 @@ import CrewProfile from "./pages/profile/CrewProfile"
 import ManageCrewMembers from "./pages/crewmembers/ManageCrewMembers";
 import NewCrewMembers from "./pages/new/NewCrewMember";
 import ViewRoster from "./pages/list/Roaster";
-import TransportProfile from "./pages/profile/TransportProfile"
+import TransportProfile from "./pages/profile/TransportProfile";
+import NewCabDriver from "./pages/new/CabDrivers";
+import CabLists from "./pages/list/CabLists";
+import { serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  updateDoc, onSnapshot,
+} from "firebase/firestore";
+import { auth, db, storage } from "./firebase";
+import CabDriversList from "./pages/list/CabDriversList";
+import i18n from "i18next";
+import { useTranslation, initReactI18next, Trans } from "react-i18next";
+import {translationsEn , translationsFr} from "./Translation";
+
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init({
+    resources: {
+      en: { translation: translationsEn },
+      fr: { translation: translationsFr },
+    },
+    lng: "en",
+  });
 
 function App() {
+  const { t } = useTranslation();
   const { darkMode } = useContext(DarkModeContext);
 
   const {currentUser} = useContext(AuthContext)
 
   const RequireAuth = ({ children }) => {
-    return currentUser ? children : <Navigate to="/login" />;
+    return currentUser ? children : <Navigate to="/" />;
   };
+  useEffect(() => {
+    
+  const unsub = onSnapshot(
+    collection(db, "users"),
+    (snapShot) => {
+      let list = [];
+      snapShot.docs.forEach((docs) => {
+        const newDoc = docs.data();
+        const today  = new Date();
+        const activeto = new Date(newDoc.activeTo);
+        //console.log(activeto.getTime())
+        //console.log(activeto)
+        if(activeto.getTime() < today.getTime()){
+          //console.log(doc.id)
+          updateDoc(doc(db, "users",docs.id), {
+            status: "InActive"
+          });
+          //alert("jddj")
+        }
+      });
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+
+  return () => {
+    unsub();
+  };
+}, []);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route path="login" element={<Login inputs={loginInputs} title="Login"/>} />
+            <Route index element={<Login inputs={loginInputs} title="Login"/>} />
             <Route path="register" element={<Register inputs={userInputs} title="New User Registration"/>} />
             <Route path="forgotPassword" element={<Forgot inputs={forgotInputs} title="Forgot Password"/>} />
             <Route path="newPassword" element={<NewPassword inputs={resetInputs} title="New Password"/>} />
+          </Route>
+            <Route path="/home">
             <Route
-              index
-              element={
+              index element={
                 <RequireAuth>
                   <Home />
                 </RequireAuth>
@@ -94,7 +149,7 @@ function App() {
             />
             <Route path="Crewprofile" element={
                   <RequireAuth>
-                    <CrewProfile />
+                    <CrewProfile title={t("CrProfile")} />
                   </RequireAuth>
                 }
               />
@@ -148,10 +203,27 @@ function App() {
             />
             <Route path="transportProfile" element={
                   <RequireAuth>
-                    <TransportProfile title="Transport Admin Profile" />
+                    <TransportProfile t />
                   </RequireAuth>
                 }
               />
+              <Route path="CabDrivers" element={
+                  <RequireAuth>
+                    <CabDriversList />
+                  </RequireAuth>
+                }
+                />
+              <Route path="CabProviders" element={
+                  <RequireAuth>
+                    <NewCabDriver inputs={cabDriversInputs} title={t("newcabDriver")} />
+                  </RequireAuth>
+                }
+              /><Route path="cabDetails" element={
+                <RequireAuth>
+                  <CabLists inputs={cabDriversInputs} title={t("newcabDriver")} />
+                </RequireAuth>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
