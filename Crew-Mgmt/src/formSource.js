@@ -205,69 +205,124 @@ export const userInputs = [
   export const crewMemberInputs = [
     {
       id: "empName",
-      label: "Employee Name",
+      name : "empName",
       type: "text",
       placeholder: "Employee Name",
+      errorMessage:
+      "Employee Name should be Required !",
+      label: "Employee Name",
+      //pattern: "^[A-Za-z0-9]{3,16}$",
+      required: true,
     },   
     {
       id: "dob",
-      label: "Date Of Birth",
+      name : "dob",
       type: "date",
       placeholder: "Date of birth",
+      errorMessage:
+      "Date Of Birth should be Required !",
+      label: "Date Of Birth",
+      //pattern: "^[A-Za-z0-9]{3,16}$",
+      required: true,
     },  
     {
       id: "empCode",
-      label: "User Id",
+      name : "empCode",
       type: "text",
       placeholder: "Employee Code",
+      errorMessage:
+      "Employee Code should be Required and it should be 6 characters!",
+      label: "Employee Code",
+      pattern: "^[A-Za-z0-9]{6}$",
+      required: true,
     }, 
     {
       id: "gender",
-      label: "Gender",
+      name : "gender",
       type: "text",
       placeholder: "Gender",
+      errorMessage:
+      "Gender should be Required !",
+      label: "Gender",
+      pattern: "^[A-Za-z]{1,13}$",
+      required: true,
     },
     {
       id: "phone",
-      label: "Phone",
+      name : "phone",
       type: "text",
-      placeholder: "Phone",
+      placeholder: "Phone Number",
+      errorMessage:
+      "Phone is Required and only Numbers !",
+      label: "Phone Number",
+      pattern: "^[0-9]{10}$",
+      required: true,
     },
     {
       id: "email",
-      label: "Email",
+      name : "email",
       type: "email",
       placeholder: "Email",
+      errorMessage:
+      "Email is Required !",
+      label: "Email",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
     },
     {
       id: "address",
-      label: "Address",
+      name : "address",
       type: "text",
-      placeholder: "Address ",
+      placeholder: "Address",
+      errorMessage:
+      " This field is Required !",
+      label: "Address",
+      //pattern: "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{3,16}$",
+      required: true,
     },
     {
       id: "city",
-      label: "City",
+      name : "city",
       type: "text",
       placeholder: "City",
-    },
+      errorMessage:
+      " This field is Required!",
+      label: "City",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    }, 
     {
       id: "state",
-      label: "State",
+      name : "state",
       type: "text",
       placeholder: "State",
-    },
+      errorMessage:
+      " This field is Required!",
+      label: "State",
+      pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    }, 
     {
       id: "pinCode",
-      label: "Pin Code",
+      name : "pinCode",
       type: "text",
       placeholder: "Pin Code",
-    },
+      errorMessage:
+      " This field is Required and only Numbers !",
+      label: "Address",
+      pattern: "^[0-9]{6}$",
+      required: true,
+    }, 
     {
       id: "requirements",
-      label: "Additional Requirements",
+      name : "requirements",
       type: "text",
       placeholder: "Additional Requirements",
+      // errorMessage:
+      // "Additional Requirements should Required",
+      label: "Additional Requirements",
+      //pattern: "^[A-Za-z]{3,16}$",
+      //required: true,
     },  
   ]
 
@@ -427,5 +482,99 @@ export const userInputs = [
       pattern: "^[0-9]{6}$",
       required: true,
     }, 
+    
+  ]
+
+  export const rosterInput =[
+    {
+      id: "date",
+      name : "date",
+      type: "date",
+      //placeholder: "First Name",
+      errorMessage:
+      "Select Date ",
+      label: "Select Date",
+     // pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    },
+    {
+      id: "departure",
+      name : "departure",
+      type: "text",
+      placeholder: "Departure",
+      errorMessage:
+      "Select Departure",
+      label: "Departure",
+      //pattern: "^[A-Za-z]{3,16}$",
+     // required: true,
+    },
+    {
+      id: "arrival",
+      name : "arrival",
+      type: "text",
+      placeholder: "Arrival",
+      errorMessage:
+      "Select Arrival",
+      label: "Arrival",
+      //pattern: "^[A-Za-z]{3,16}$",
+      //required: true,
+    },
+  ]
+  export const logisticCrewInput =[
+    {
+      id: "date",
+      name : "date",
+      type: "date",
+      //placeholder: "First Name",
+      errorMessage:
+      "Select Date ",
+      label: "Select Date",
+     // pattern: "^[A-Za-z]{3,16}$",
+      required: true,
+    },
+    {
+      id: "cabType",
+      name : "cabType",
+      type: "text",
+      //placeholder: "Arrival To",
+      errorMessage:
+      " Required and only characters !",
+      label: "Cab Type",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
+    },
+    {
+      id: "cab",
+      name : "cab",
+      type: "text",
+      //placeholder: "Arrival To",
+      errorMessage:
+      " Required and only characters !",
+      label: "Cab",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
+    },
+    {
+      id: "cabPickUp",
+      name : "cabPickUp",
+      type: "time",
+      //placeholder: "Arrival To",
+      errorMessage:
+      " Required and Select Time !",
+      label: "Pick Up Time",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
+    },
+    {
+      id: "cabDrop",
+      name : "cabDrop",
+      type: "time",
+      //placeholder: "Arrival To",
+      errorMessage:
+      " Required and Select Time !",
+      label: "Drop Time",
+      //pattern: "^[A-Za-z0-9]$",
+      required: true,
+    },
     
   ]

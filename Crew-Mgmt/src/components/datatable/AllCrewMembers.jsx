@@ -54,15 +54,14 @@ const AllCrewMembers = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/users/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton">Edit</div>
+            <Link to={`/airline/crewRoster/${params.row.id}`} style={{ textDecoration: "none" }}>
+              <div className="viewButton">View Roster</div>
            </Link>
-            <div
+            {/* <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+            >Delete
+            </div> */}
           </div>
         );
       },
@@ -86,11 +85,14 @@ const AllCrewMembers = () => {
     <div className="datatable">
       <div className="datatableTitle">
         All Crew Members List
+        <Link to={`/airline/newCrewMembers/newCrew`} className="link">
+          Add New
+        </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={crewMembersList}
+        columns={crewMembersList.concat(statusColumn,actionColumn)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection

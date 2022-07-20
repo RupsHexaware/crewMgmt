@@ -19,13 +19,27 @@ const CrewMemberDatatable = () => {
 //console.log(crewId)
   useEffect(() => {
     const unsub = onSnapshot(
-      collection(db, "crewMembers"),
+      collection(db, "allotedCrewForFlight"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
             const newDoc = doc.data();
-            if(crewId === newDoc.crewId){
-                list.push({ id: doc.id, ...doc.data() });
+            if(crewId === newDoc.flightid){
+              //console.log(doc.id)
+              list.push({ id: doc.id, ...doc.data() });
+            //     onSnapshot(collection(db,"crewMembers"),
+            //     (snapShot)=>{
+            //       let memberlist = [];
+            //       snapShot.docs.forEach((doc) => {
+            //         const newMe = doc.data();
+            //         //console.log(doc.id + "------" +newDoc.memberId)
+            //         if(doc.id === newDoc.memberId){
+            //           //console.log("Employee Added   "+ doc.id)
+            //           memberlist.push({ id: doc.id, ...doc.data() }); 
+            //         }  
+            //       })
+            //       setData(memberlist);
+            //     }) 
             }
         });
         setData(list);
@@ -39,10 +53,10 @@ const CrewMemberDatatable = () => {
       unsub();
     };
   }, []);
-
+  //console.log("Employee List "+ data)
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "crewMembers", id));
+      await deleteDoc(doc(db, "allotedCrewForFlight", id));
       setData(data.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
@@ -88,9 +102,9 @@ const CrewMemberDatatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Crew Members List
+        In Flight Crew Members List
         <Link to={`/airline/newCrewMembers/${crewId}`} className="link">
-          Add New
+          Add Member
         </Link>
       </div>
       <DataGrid

@@ -14,9 +14,9 @@ import {
 import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate, useParams} from "react-router-dom";
-import FormInput from "../../commonInput/FormInput";
-import FormButton from "../../commonInput/FormButtons"
-import Dropdown from "../../commonInput/FormDropdown";
+import FormInput from "../../components/commonInput/FormInput";
+import FormButton from "../../components/commonInput/FormButtons"
+import Dropdown from "../../components/commonInput/FormDropdown";
 
 
 const NewCrewMembers = ({ inputs, title }) => {
@@ -76,35 +76,33 @@ const NewCrewMembers = ({ inputs, title }) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    const res1 = onSnapshot(
-      collection(db, "rosterDetails"),
-      (snapShot) => {
-        let list = [];
-        snapShot.docs.forEach((doc) => {
-          console.log(doc.id)
-         if(doc.id === crewId){
-          const newDoc = doc.data();
-          //list.push({ id: doc.id, ...doc.data() });
-          //setFlightNo(newDoc.flightNo);
-          setUserData(doc.data());
-          //console.log(doc.data());
-         }
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    const id = uuidv4();
     try {
-      const id = uuidv4();
-      //console.log(flightNo)
-      const res = await setDoc(doc(db, "crewMembers",id), {
-        ...data,
-        flightNo : userData.flightNo,
-        crewId : crewId,
-        status:"Active",
-        timeStamp: serverTimestamp(),
-      });
+    const res1 = await setDoc(doc(db, "crewMembers",id), {
+          ...data,
+          status:"Active",
+          timeStamp: serverTimestamp(),
+        });
+
+        // setDoc(doc(db,"crewRosterDetails",id),{
+        //   crewID: crewId,
+        //   crewName : data.empName,
+        //   assignedFlight : newDoc.flightNo,
+        //   route : newDoc.departure + "-"+newDoc.arrival,
+        //   arrivalTime : newDoc.arrivalTime,
+        //   departureTime : newDoc.departureTime,
+        //   timestamp : serverTimestamp(),
+
+        // });
+      // }(error) => {
+      //   console.log(error);
+      // }
+   
+    //console.log(res1 + "sdsd")
+  
+     
+      //console.log(userData.flightNo)
+      
       navigate(-1)
     } catch (err) {
       console.log(err);

@@ -25,9 +25,11 @@ export const translationsEn = {
   users : "Users",
   mngcrw : "Manage Crew",
   mngcrwMem : "Manage Crew Members",
-  vwRostr : "View Roster",
+  vwRostr : "Flight Schedule",
+  crRostr : "Crew Roster",
   //Home List Page Titles
-  trlistHometitle : "Latest Taxi Driver Registered"
+  trlistHometitle : "Latest Taxi Driver Registered",
+  logisticArrangement : "Logistic Arrangement By Airline Crew Admin",
   };
   export const translationsFr = {
     Search: "chercher..!",

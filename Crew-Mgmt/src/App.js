@@ -6,7 +6,7 @@ import CrewMemberList from "./pages/list/CrewMemberList";
 import New from "./pages/new/New";
 import NewCrew from "./pages/new/NewCrew"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { crewInputs, cabDriversInputs,crewMemberInputs,userInputs ,forgotInputs ,loginInputs,resetInputs,userEditInputs} from "./formSource";
+import { crewInputs, cabDriversInputs,crewMemberInputs,userInputs ,rosterInput,forgotInputs ,loginInputs,resetInputs,userEditInputs} from "./formSource";
 import "./style/dark.scss";
 import { useContext, useEffect } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -22,10 +22,13 @@ import TransportHome from "./pages/home/TransportHome";
 import CrewProfile from "./pages/profile/CrewProfile"
 import ManageCrewMembers from "./pages/crewmembers/ManageCrewMembers";
 import NewCrewMembers from "./pages/new/NewCrewMember";
-import ViewRoster from "./pages/list/Roaster";
+import ViewRoster from "./pages/Roster/Roaster";
+import CrewRoster from "./pages/Roster/CrewRoster"
 import TransportProfile from "./pages/profile/TransportProfile";
 import NewCabDriver from "./pages/new/CabDrivers";
 import CabLists from "./pages/list/CabLists";
+import CrewListForLogistic from "./pages/list/LogisticCrewList";
+
 import { serverTimestamp } from "firebase/firestore";
 import {
   addDoc,
@@ -38,6 +41,8 @@ import CabDriversList from "./pages/list/CabDriversList";
 import i18n from "i18next";
 import { useTranslation, initReactI18next, Trans } from "react-i18next";
 import {translationsEn , translationsFr} from "./Translation";
+import CrewLogisticArrangement from "./pages/LogisticArrangement/CrewLogisticArrangement";
+import MembersList from "./pages/list/MembersList";
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -173,9 +178,15 @@ function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="newCrewMembers/:crewId" element={
+              <Route path="newCrewMembers/newCrew" element={
                   <RequireAuth>
-                    <NewCrewMembers inputs={crewMemberInputs} title="Add Crew Members" crewId/>
+                    <NewCrewMembers inputs={crewMemberInputs} title="Add Crew Member" />
+                  </RequireAuth>
+                }
+              />
+              <Route path="newCrewMembers/:flightId" element={
+                  <RequireAuth>
+                    <MembersList title="Add Crew Member from list" flightId/>
                   </RequireAuth>
                 }
               />
@@ -191,6 +202,24 @@ function App() {
                   </RequireAuth>
                 }
               />
+              <Route path="crewRoster/:flightId" element={
+                  <RequireAuth>
+                    <CrewRoster title="View Crew Roster" />
+                  </RequireAuth>
+                }
+              />
+              <Route path="logisticArrangement" element={
+                  <RequireAuth>
+                    <CrewListForLogistic title={t("logisticArrangement")} />
+                  </RequireAuth>
+                }
+              />
+                <Route path = "logisticArrangement/:crewId" element={
+                  <RequireAuth>
+                    <CrewLogisticArrangement title = "Request Form For Logistic Arrangement" crewId/>
+                  </RequireAuth>
+                }/>
+              {/* </Route> */}
           </Route>
           <Route path="/transport">
           <Route

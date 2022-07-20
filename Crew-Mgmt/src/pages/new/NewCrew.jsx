@@ -14,7 +14,7 @@ import {
 import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate} from "react-router-dom";
-import FormInput from "../../commonInput/FormInput";
+import FormInput from "../../components/commonInput/FormInput";
 import "./new.scss"
 
 const NewCrew = ({ inputs, title }) => {

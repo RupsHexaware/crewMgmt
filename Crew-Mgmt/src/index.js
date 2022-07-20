@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { DarkModeContextProvider } from "./context/darkModeContext";
 import { Provider } from "react-redux"
 
+
 ReactDOM.render(
   <React.StrictMode>
     <DarkModeContextProvider>

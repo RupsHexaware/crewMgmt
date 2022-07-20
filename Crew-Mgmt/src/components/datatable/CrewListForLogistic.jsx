@@ -4,6 +4,7 @@ import { crewColumns, userRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userInputs } from "../../formSource";
+import { useTranslation } from "react-i18next";
 
 import {
   collection,
@@ -15,29 +16,16 @@ import {
 import { db } from "../../firebase";
 import Edituser from "../../pages/edit/EditUser";
 
-const Datatable = () => {
+const CrewListForLogistic = () => {
   const [data, setData] = useState([]);
   const [editBox , seteditBox] = useState(false);
+  const {t} = useTranslation();
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   let list = [];
-    //   try {
-    //     const querySnapshot = await getDocs(collection(db, "users"));
-    //     querySnapshot.forEach((doc) => {
-    //       list.push({ id: doc.id, ...doc.data() });
-    //     });
-    //     setData(list);
-    //     console.log(list);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // fetchData();
 
     // LISTEN (REALTIME)
     const unsub = onSnapshot(
-      collection(db, "flight_schedule"),
+      collection(db, "rosterDetails"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
@@ -57,7 +45,7 @@ const Datatable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "flight_schedule", id));
+      await deleteDoc(doc(db, "rosterDetails", id));
       setData(data.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
@@ -72,29 +60,23 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/airline/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton">Manage Crew</div>
+            <Link to={`/airline/logisticArrangement/${params.row.id}`} style={{ textDecoration: "none" }}>
+              <div className="viewButton">Create Request</div>
             </Link>
-            {/* <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div> */}
           </div>
         );
       },
     },
   ];
-  const statusColumn = [
+  const routeColumn = [
     {
       field: "route",
       headerName: "Flight Route",
-      width: 250,
+      width: 200,
       renderCell: (params) => {
         return (
           <div>
-            {params.row.Origin}-{params.row.Destination}
+            {params.row.departure}-{params.row.arrival}
           </div>
         );
       },
@@ -108,7 +90,7 @@ const Datatable = () => {
       renderCell: (params) => {
         return (
           <div>
-            {params.row.OperationalDay}- At {params.row.Departure}
+            {params.row.date}-{params.row.arrivalTime}
           </div>
         );
       },
@@ -117,15 +99,12 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        View Crew
-        {/*="/airline/newCrew" className="link">
-          Add New
-        </Link> */}
+      {t("logisticArrangement")} 
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={crewColumns.concat(statusColumn,dateColumn,actionColumn)}
+        columns={crewColumns.concat(routeColumn,dateColumn,actionColumn)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
@@ -141,4 +120,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable;
+export default CrewListForLogistic;

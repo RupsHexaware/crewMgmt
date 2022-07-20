@@ -46,8 +46,8 @@ export const crewMembersColumns = [
     width: 200,
   },
   {
-    field: "requirements",
-    headerName: "Additional Requirements",
+    field: "flightDate",
+    headerName: "Flight Date",
     width: 230,
   },
 ];
@@ -74,45 +74,59 @@ export const crewMembersList = [
     headerName: "Email",
     width: 200,
   },
+];
+export const crewMembersListForCrew = [
+  { field: "id", headerName: " User ID", width: 100,hide: true},
+  { field: "empCode", headerName: " Emp ID", width: 100,},
   {
-    field: "flightNo",
-    headerName: "Assigned Flight No",
+    field: 'empName',
+    headerName: "Employee Name",
     width: 230,
   },
+  {
+    field: "gender",
+    headerName: "Gender",
+    width: 200,
+  },
+  {
+    field: "phone",
+    headerName: "Contact No",
+    width: 200,
+  },
+  {
+    field: "email",
+    headerName: "Email",
+    width: 200,
+  },
 ];
-
-const  u = {
-  departure : "departure",
-  arrival : "arrival"
-}
 export const crewColumns = [
   { field: "id", headerName: "ID", width: 100, hide: true},
   {
-    field: "flightNo",
+    field: "FlightNo",
     headerName: "Flight No",
     width: 200,
   },
   {
     field: "crewMembers",
     headerName: "Crew Members",
-    width: 200,
+    width: 150,
   },
 ];
 
 export const RoasterColumns = [
   {
-    field: "flightNo",
+    field: "FlightNo",
     headerName: "Flight No",
     width: 150,
   },
   {
-    field: "departure",
-    headerName: "Departure",
+    field: "Origin",
+    headerName: "Origin",
     width: 150,
   },
   {
-    field: "arrival",
-    headerName: "Arrival",
+    field: "Destination",
+    headerName: "Destination",
     width: 150,
   },
   {
@@ -121,17 +135,17 @@ export const RoasterColumns = [
     width: 150,
   },
   {
-    field: "date",
-    headerName: "Date",
+    field: "OperationalDay",
+    headerName: "Operational Day",
     width: 150,
   },
   {
-    field: "departureTime",
+    field: "Departure",
     headerName: "Departure Time",
     width: 150,
   },
   {
-    field: "arrivalTime",
+    field: "Arrival",
     headerName: "Arrival Time",
     width: 150,
   },
@@ -192,4 +206,62 @@ export const cabColumns = [
     headerName: "Driver Assigned",
     width: 150,
   },
+]
+export const CrewRosterColumns = [
+  {
+    field: "crewID",
+    headerName: "ID",
+    width: 150,
+    hide: true
+  },
+  {
+    field: "crewName",
+    headerName: "Name",
+    width: 150,
+  },
+  {
+    field: "assignedFlight",
+    headerName: "Assigned Flight",
+    width: 150,
+  },
+  {
+    field: "route",
+    headerName: "Flight Route",
+    width: 150,
+  },
+  {
+    field: "arrivalTime",
+    headerName: "Arrival Time",
+    width: 150,
+  },
+  {
+    field: "assignedCab",
+    headerName: "Assigned Cab",
+    width: 150,
+  },
+  {
+    field: "cabPickupAirport",
+    headerName: "Cab Pickup Time",
+    width: 150,
+  },
+  {
+    field: "cabDropHotel",
+    headerName: "Cab Drop Time",
+    width: 150,
+  },
+  {
+    field: "departureTime",
+    headerName: "Departure Time",
+    width: 150,
+  },
+  {
+    field: "cabPickupHotel",
+    headerName: "Cab Pickup Hotel Time",
+    width: 150,
+  },{
+    field: "cabDropAirport",
+    headerName: "Cab Pickup Hotel Time",
+    width: 150,
+  },
+
 ]

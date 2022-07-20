@@ -14,8 +14,8 @@ import {
 import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate, useParams} from "react-router-dom";
-import FormInput from "../../commonInput/FormInput";
-import FormButton from "../../commonInput/FormButtons";
+import FormInput from "../../components/commonInput/FormInput";
+import FormButton from "../../components/commonInput/FormButtons";
 
 const NewCabDriver = ({ inputs, title }) => {
   const { crewId } = useParams();

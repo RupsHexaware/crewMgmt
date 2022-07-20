@@ -16,6 +16,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import Dropdowm from "../../components/commonInput/FormDropdown";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
@@ -146,6 +147,9 @@ const New = ({ inputs, title }) => {
                   <option value="In Active">In Active</option>
                 </select>
               </div>
+              <Dropdowm 
+              id = {inputs.id}
+              />
               <div className="formInput">
                 <label>Role</label>
                 <select className="mt-4" id="role" value={role.value} onChange={handleInput}>

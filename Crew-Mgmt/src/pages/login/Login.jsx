@@ -14,8 +14,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useNavigate, Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext"
 import image from '../../image/airport.jpg';
-import FormInput from "../../commonInput/FormInput";
-import FormButton from '../../commonInput/FormButtons';
+import FormInput from "../../components/commonInput/FormInput";
+import FormButton from '../../components/commonInput/FormButtons';
 
 const Login = ({ inputs, title }) => {
   const [error, setError] = useState(false);

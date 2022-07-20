@@ -59,10 +59,18 @@ const TransportSidebar = () => {
             <span>{t("vwRostr")}</span>
           </li>
           </Link>
+          {/* <Link to="/airline/crewRoster" style={{ textDecoration: "none" }}>
+          <li>
+            <CreditCardIcon className="icon" />
+            <span>{t("crRostr")}</span>
+          </li>
+          </Link> */}
+          <Link to="/airline/logisticArrangement" style={{ textDecoration: "none" }}>
           <li>
             <LocalShippingIcon className="icon" />
             <span>{t("logArngmt")}</span>
           </li>
+          </Link>
           <p className="title">{t("usful")}</p>
           {/* <li>
             <InsertChartIcon className="icon" />

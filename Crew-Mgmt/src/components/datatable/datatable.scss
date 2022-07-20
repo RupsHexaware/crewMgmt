@@ -22,6 +22,27 @@
       cursor: pointer;
     }
   }
+  .SearchDiv{
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    margin: 10px;
+    display: inline-flex;
+    align-items: center;
+    padding: 20px 40px;
+    justify-content: space-evenly;
+
+    .link{
+      text-decoration: none;
+      color: green;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid green;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
 
   .cellWithImg {
     display: flex;
@@ -70,6 +91,5 @@
       border: 1px dotted rgba(220, 20, 60, 0.6);
       cursor: pointer;
     }
-    
   }
 }
