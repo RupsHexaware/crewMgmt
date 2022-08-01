@@ -360,17 +360,17 @@ export const userInputs = [
       //pattern: "^[A-Za-z0-9]$",
       required: true,
     }, 
-    {
-      id: "userId",
-      name : "userId",
-      type: "text",
-      placeholder: "User ID",
-      errorMessage:
-      "User ID should be Alphanumeric ",
-      label: "User ID",
-      pattern: "^[A-Z0-9]{0,8}$",
-      required: true,
-    }, 
+    // {
+    //   id: "userId",
+    //   name : "userId",
+    //   type: "text",
+    //   placeholder: "User ID",
+    //   errorMessage:
+    //   "User ID should be Alphanumeric ",
+    //   label: "User ID",
+    //   pattern: "^[A-Z0-9]{0,8}$",
+    //   required: true,
+    // }, 
     {
       id: "gender",
       name : "gender",
@@ -383,18 +383,6 @@ export const userInputs = [
       required: true,
     },  
     {
-      id: "status",
-      name : "status",
-      type: "text",
-      placeholder: "Status",
-      errorMessage:
-      " This field is Required and only characters !",
-      label: "Status",
-      pattern: "^[A-Za-z]{3,16}$",
-      required: true,
-      
-    },
-    {
       id: "primaryNo",
       name : "primaryNo",
       type: "text",
@@ -405,17 +393,6 @@ export const userInputs = [
       pattern: "^[0-9]{10}$",
       required: true,
     },  
-    {
-      id: "serviceArea",
-      name : "serviceArea",
-      type: "text",
-      placeholder: "Service Area",
-      errorMessage:
-      " This field is Required and only characters !",
-      label: "Service Area",
-      pattern: "^[A-Za-z]{3,16}$",
-      required: true,
-    }, 
     {
       id: "secondaryNo",
       name : "secondaryNo",
@@ -520,61 +497,104 @@ export const userInputs = [
       //required: true,
     },
   ]
-  export const logisticCrewInput =[
-    {
-      id: "date",
-      name : "date",
-      type: "date",
-      //placeholder: "First Name",
-      errorMessage:
-      "Select Date ",
-      label: "Select Date",
-     // pattern: "^[A-Za-z]{3,16}$",
-      required: true,
-    },
-    {
-      id: "cabType",
-      name : "cabType",
-      type: "text",
-      //placeholder: "Arrival To",
-      errorMessage:
-      " Required and only characters !",
-      label: "Cab Type",
-      //pattern: "^[A-Za-z0-9]$",
-      required: true,
-    },
-    {
-      id: "cab",
-      name : "cab",
-      type: "text",
-      //placeholder: "Arrival To",
-      errorMessage:
-      " Required and only characters !",
-      label: "Cab",
-      //pattern: "^[A-Za-z0-9]$",
-      required: true,
-    },
-    {
-      id: "cabPickUp",
-      name : "cabPickUp",
-      type: "time",
-      //placeholder: "Arrival To",
-      errorMessage:
-      " Required and Select Time !",
-      label: "Pick Up Time",
-      //pattern: "^[A-Za-z0-9]$",
-      required: true,
-    },
-    {
-      id: "cabDrop",
-      name : "cabDrop",
-      type: "time",
-      //placeholder: "Arrival To",
-      errorMessage:
-      " Required and Select Time !",
-      label: "Drop Time",
-      //pattern: "^[A-Za-z0-9]$",
-      required: true,
-    },
-    
-  ]
+  export const cabInputs = [
+  {
+    id: "regiArea",
+    name : "regiArea",
+    type: "text",
+    placeholder: "Registration Area",
+    errorMessage:
+    " This field is Required and only characters !",
+    label: "Registration Area (state)",
+    pattern: "^[A-Za-z]{3,16}$",
+    required: true,
+  }, 
+  {
+    id: "noOfseats",
+    name : "noOfseats",
+    type: "text",
+    placeholder: "No of Seats",
+    errorMessage:
+    " This field is Required and only Numbers !",
+    label: "No of Seats",
+    pattern: "^[0-9]{1}$",
+    required: true,
+  },
+  {
+    id: "regiNo",
+    name : "regiNo",
+    type: "text",
+    placeholder: "Registration No",
+    errorMessage:
+    " This field is Required !",
+    label: "Registration No",
+   // pattern: "^[A-Za-z0-9]{4,16}$",
+    required: true,
+  },
+  {
+    id: "vehicle",
+    name : "vehicle",
+    type: "text",
+    placeholder: "Vehicle",
+    errorMessage:
+    " This field is Required !",
+    label: "Vehicle",
+    pattern: "^[A-Za-z0-9]{4,16}$",
+    required: true,
+  },
+ ]
+export const providerInputs = [
+  {
+    id: "providerName",
+    name : "providerName",
+    type: "text",
+    placeholder: "Transport Provider Name",
+    errorMessage:
+    " This field is Required !",
+    label: "Transport Provider Name",
+   // pattern: "^[A-Za-z0-9,]{3,16}$",
+    required: true,
+  },
+  {
+    id: "licenceNo",
+    name : "licenceNo",
+    type: "text",
+    placeholder: "Licence No",
+    errorMessage:
+    " This field is Required !",
+    label: "Licence No",
+    pattern: "^[A-Za-z0-9]{3,16}$",
+    required: true,
+  },
+  {
+    id: "contactPerson",
+    name : "contactPerson",
+    type: "text",
+    placeholder: "Contact Person Name",
+    errorMessage:
+    " This field is Required !",
+    label: "Contact Person Name",
+   //pattern: "^[A-Za-z]{3,16}$",
+    required: true,
+  },
+  {
+    id: "contactPhone",
+    name : "contactPhone",
+    type: "text",
+    placeholder: "Contact Person Number",
+    errorMessage:
+    " This field is Required and only Numbers !",
+    label: "Contact Person Number",
+    pattern: "^[0-9]{10}$",
+    required: true,
+  },  
+  {
+    id: "email",
+    name: "email",
+    type: "email",
+    placeholder: "Contact Person Email",
+    errorMessage: "It should be a valid email address!",
+    label: "Contact Person Email",
+    required: true,
+  },
+]

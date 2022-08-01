@@ -89,11 +89,6 @@ export const crewMembersListForCrew = [
     width: 200,
   },
   {
-    field: "phone",
-    headerName: "Contact No",
-    width: 200,
-  },
-  {
     field: "email",
     headerName: "Email",
     width: 200,
@@ -110,6 +105,29 @@ export const crewColumns = [
     field: "crewMembers",
     headerName: "Crew Members",
     width: 150,
+  },
+];
+export const crewColumnsForLogistic = [
+  { field: "id", headerName: "ID", width: 100, hide: true},
+  {
+    field: "empCode",
+    headerName: "Employee Code",
+    width: 200,
+  },
+  {
+    field: "empName",
+    headerName: "Employee Name",
+    width: 200,
+  },
+  {
+    field: "flightDate",
+    headerName: "Flight Date",
+    width: 200,
+  },
+  {
+    field: "FlightArrival",
+    headerName: "Arrival Time",
+    width: 200,
   },
 ];
 
@@ -174,12 +192,7 @@ export const driverColumns = [
     width: 150,
   },
   {
-    field: "serviceArea",
-    headerName: "Service Area",
-    width: 150,
-  },
-  {
-    field: "cabAssigned",
+    field: "AssignedCab",
     headerName: "Assigned Cab",
     width: 150,
   },
@@ -187,22 +200,32 @@ export const driverColumns = [
 
 export const cabColumns = [
   {
-    field: "regNo",
+    field: "regiNo",
     headerName: "Registration No",
     width: 150,
   },
   {
-    field: "category",
+    field: "Category",
     headerName: "Category",
     width: 150,
   },
   {
-    field: "noOfSeats",
+    field: "regiArea",
+    headerName: "Service Area",
+    width: 150,
+  },
+  {
+    field: "location",
+    headerName: "Local Area",
+    width: 150,
+  },
+  {
+    field: "noOfseats",
     headerName: "No Of Seats",
     width: 150,
   },
   {
-    field: "assignedDriver",
+    field: "AssignedDriver",
     headerName: "Driver Assigned",
     width: 150,
   },
@@ -264,4 +287,62 @@ export const CrewRosterColumns = [
     width: 150,
   },
 
+]
+
+export const crewColumnsForLogisticApproval =[
+  { field: "id", headerName: "ID", width: 100, hide: true},
+  {
+    field: "empCode",
+    headerName: "Employee Code",
+    width: 150,
+  },
+  {
+    field: "empName",
+    headerName: "Employee Name",
+    width: 200,
+  },
+  {
+    field: "pickupstartDate",
+    headerName: "PickUp Date & Time",
+    width: 200,
+  },
+  {
+    field: "dropStartDate",
+    headerName: "Drop Date & Time",
+    width: 200,
+  },
+  {
+    field: "assignedCab",
+    headerName: "Assigned Cab",
+    width: 200,
+  },
+]
+
+export const providerColumns = [
+  { field: "id", headerName: "ID", width: 100, hide: true},
+  {
+    field: "providerName",
+    headerName: "Provider Name",
+    width: 150,
+  },
+  {
+    field: "contactPerson",
+    headerName: "Conatact Person",
+    width: 200,
+  },
+  {
+    field: "contactPhone",
+    headerName: "Conatact Phone",
+    width: 200,
+  },
+  {
+    field: "email",
+    headerName: "Conatact Mail",
+    width: 200,
+  },
+  {
+    field: "loc",
+    headerName: "Service Area",
+    width: 200,
+  },
 ]

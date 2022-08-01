@@ -2,11 +2,12 @@ import "./widget.scss";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import BikeScooterIcon from '@mui/icons-material/BikeScooter';
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import FlightIcon from '@mui/icons-material/Flight';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import LocalTaxiIcon from '@mui/icons-material/LocalTaxi';
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -53,13 +54,29 @@ const Widget = ({ type }) => {
         ),
       };
       break;
+      case "Providers":
+      data = {
+        title: "TRANSPORT PROVIDERS",
+        query:"transport_provider",
+        link: "View All Poviders",
+        column:"status",
+        condition : "==",
+        status: "Active",
+        icon: (
+          <BikeScooterIcon
+            className="icon"
+            style={{ backgroundColor: "rgba(0, 128, 0, 0.2)", color: "green" }}
+          />
+        ),
+      };
+      break;
       case "crewMembers":
       data = {
         title: "CREW MEMBERS",
         isMoney: true,
         link: "View All Members",
         icon: (
-          <AccessibilityNewIcon
+          <PersonOutlinedIcon
             className="icon"
             style={{ backgroundColor: "rgba(0, 128, 0, 0.2)", color: "green" }}
           />
@@ -76,6 +93,44 @@ const Widget = ({ type }) => {
         status: "Active",
         icon: (
           <AccountBalanceWalletOutlinedIcon
+            className="icon"
+            style={{
+              backgroundColor: "rgba(128, 0, 128, 0.2)",
+              color: "purple",
+            }}
+          />
+        ),
+      };
+      break;
+      case "Cabs":
+      data = {
+        title: "CAB REGISTRED",
+        query:"cab_details",
+        link: "See details",
+        column:"status",
+        condition : "==",
+        status: "Active",
+        icon: (
+          <LocalTaxiIcon
+            className="icon"
+            style={{
+              backgroundColor: "rgba(128, 0, 128, 0.2)",
+              color: "purple",
+            }}
+          />
+        ),
+      };
+      break;
+      case "Drivers":
+      data = {
+        title: "DRIVER REGISTRED",
+        query:"cabDrivers",
+        link: "See details",
+        column:"status",
+        condition : "==",
+        status: "Active",
+        icon: (
+          <PersonOutlinedIcon
             className="icon"
             style={{
               backgroundColor: "rgba(128, 0, 128, 0.2)",

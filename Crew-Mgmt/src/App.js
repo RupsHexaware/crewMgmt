@@ -6,7 +6,7 @@ import CrewMemberList from "./pages/list/CrewMemberList";
 import New from "./pages/new/New";
 import NewCrew from "./pages/new/NewCrew"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { crewInputs, cabDriversInputs,crewMemberInputs,userInputs ,rosterInput,forgotInputs ,loginInputs,resetInputs,userEditInputs} from "./formSource";
+import { crewInputs, cabDriversInputs,crewMemberInputs,userInputs ,providerInputs,cabInputs,forgotInputs ,loginInputs,resetInputs,userEditInputs} from "./formSource";
 import "./style/dark.scss";
 import { useContext, useEffect } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
@@ -28,6 +28,7 @@ import TransportProfile from "./pages/profile/TransportProfile";
 import NewCabDriver from "./pages/new/CabDrivers";
 import CabLists from "./pages/list/CabLists";
 import CrewListForLogistic from "./pages/list/LogisticCrewList";
+import RequestApproval from "./pages/new/RequestApproval";
 
 import { serverTimestamp } from "firebase/firestore";
 import {
@@ -43,6 +44,15 @@ import { useTranslation, initReactI18next, Trans } from "react-i18next";
 import {translationsEn , translationsFr} from "./Translation";
 import CrewLogisticArrangement from "./pages/LogisticArrangement/CrewLogisticArrangement";
 import MembersList from "./pages/list/MembersList";
+import Cabregistration from "./pages/new/Cabregistration";
+import CabAssign from "./pages/new/CabAssign";
+import CrewListForApproval from "./pages/list/crewListForApproval"
+import TransportProviderList from "./pages/list/TransportProviderList";
+import TransportProvider from "./pages/new/TransportProvider";
+import EditTransportProvider from "./pages/edit/EditTransportProvider";
+import EditCabDriver from "./pages/edit/EditCab";
+import TransportProviderHome from "./pages/home/TransportProviderHome";
+import TransportProviderProfile from "./pages/profile/TransportProviderPfrofile";
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -99,7 +109,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Login inputs={loginInputs} title="Login"/>} />
+            <Route index element={<Login inputs={loginInputs} title={t("login")}/>} />
             <Route path="register" element={<Register inputs={userInputs} title="New User Registration"/>} />
             <Route path="forgotPassword" element={<Forgot inputs={forgotInputs} title="Forgot Password"/>} />
             <Route path="newPassword" element={<NewPassword inputs={resetInputs} title="New Password"/>} />
@@ -204,7 +214,7 @@ function App() {
               />
               <Route path="crewRoster/:flightId" element={
                   <RequireAuth>
-                    <CrewRoster title="View Crew Roster" />
+                    <CrewRoster title="View Crew Roster" flightId/>
                   </RequireAuth>
                 }
               />
@@ -221,6 +231,58 @@ function App() {
                 }/>
               {/* </Route> */}
           </Route>
+          <Route path="/transportProvider">
+          <Route
+              index
+              element={
+                <RequireAuth>
+                  <TransportProviderHome />
+                </RequireAuth>
+              }
+            />
+            <Route path="CabDrivers" element={
+                  <RequireAuth>
+                    <CabDriversList />
+                  </RequireAuth>
+                }
+                />
+            <Route path="NewCabDriver" element={
+                  <RequireAuth>
+                    <NewCabDriver inputs={cabDriversInputs} title={t("newcabDriver")} />
+                  </RequireAuth>
+                }
+                />
+            <Route path="CabDrivers/:driverId" element={
+                  <RequireAuth>
+                    <CabAssign title={t("cabAssign")} driverId/>
+                  </RequireAuth>
+                }
+              />    
+            <Route path="cabDetails" element={
+                <RequireAuth>
+                  <CabLists inputs={cabDriversInputs} title={t("newcabDriver")} />
+                </RequireAuth>
+                }
+                />
+            <Route path="cabDetails/:cabId" element={
+                <RequireAuth>
+                  <EditCabDriver title={t("editcabDriver")} cabId/>
+                </RequireAuth>
+                }
+                />
+            <Route path="Cabregistration" element={
+                <RequireAuth>
+                  <Cabregistration inputs={cabInputs} title={t("newcabregi")} />
+                </RequireAuth>
+              }
+            />
+            <Route path="transportProviderProfile" element={
+                  <RequireAuth>
+                    <TransportProviderProfile />
+                  </RequireAuth>
+                }
+              />
+          </Route>
           <Route path="/transport">
           <Route
               index
@@ -232,27 +294,40 @@ function App() {
             />
             <Route path="transportProfile" element={
                   <RequireAuth>
-                    <TransportProfile t />
+                    <TransportProfile />
                   </RequireAuth>
                 }
               />
-              <Route path="CabDrivers" element={
+              <Route path="CrewListForApproval" element={
                   <RequireAuth>
-                    <CabDriversList />
+                    <CrewListForApproval title={t("cabAssign")} driverId/>
                   </RequireAuth>
                 }
-                />
-              <Route path="CabProviders" element={
+              />
+              <Route path="trnsprtPvder" element={
                   <RequireAuth>
-                    <NewCabDriver inputs={cabDriversInputs} title={t("newcabDriver")} />
+                    <TransportProviderList />
                   </RequireAuth>
                 }
-              /><Route path="cabDetails" element={
-                <RequireAuth>
-                  <CabLists inputs={cabDriversInputs} title={t("newcabDriver")} />
-                </RequireAuth>
-              }
-            />
+              />
+              <Route path="newProvider" element={
+                  <RequireAuth>
+                    <TransportProvider title={t("provider")} inputs={providerInputs}/>
+                  </RequireAuth>
+                }
+              />
+              <Route path="trnsprtPvder/:providerId" element={
+                  <RequireAuth>
+                    <EditTransportProvider title={t("editProvider")} providerId/>
+                  </RequireAuth>
+                }
+              />
+              <Route path="CrewListForApproval/:memberId" element={
+                  <RequireAuth>
+                    <RequestApproval title={t("logisticArrangementApproval")} memberId/>
+                  </RequireAuth>
+                }
+              />
           </Route>
         </Routes>
       </BrowserRouter>

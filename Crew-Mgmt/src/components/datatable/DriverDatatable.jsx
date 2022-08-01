@@ -14,36 +14,43 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import Edituser from "../../pages/edit/EditUser";
+import { t } from "i18next";
 
 const DriverDatatable = () => {
   const [data, setData] = useState([]);
   const [editBox , seteditBox] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [providerData, setProviderData] = useState([]);
+  let user = JSON.parse(localStorage.getItem('user'));
+  //console.log(user)
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   let list = [];
-    //   try {
-    //     const querySnapshot = await getDocs(collection(db, "users"));
-    //     querySnapshot.forEach((doc) => {
-    //       list.push({ id: doc.id, ...doc.data() });
-    //     });
-    //     setData(list);
-    //     console.log(list);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // fetchData();
-
-    // LISTEN (REALTIME)
     const unsub = onSnapshot(
-      collection(db, "cabDrivers"),
+      collection(db, "Locations"),
       (snapShot) => {
         let list = [];
         snapShot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
+           list.push({ id: doc.id, ...doc.data() });  
         });
-        setData(list);
+        setUserData(list);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    // LISTEN (REALTIME)
+    //console.log(user.email)
+    const unsubb = onSnapshot(
+      collection(db, "transport_provider"),
+      (snapShot) => {
+        let list = [];
+        snapShot.docs.forEach((doc) => {
+          const newDoc = doc.data();
+          if(newDoc.email === user.email){
+            setProviderData(newDoc);
+          } 
+        });
       },
       (error) => {
         console.log(error);
@@ -57,13 +64,31 @@ const DriverDatatable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "crewDetails", id));
+      await deleteDoc(doc(db, "cabDrivers", id));
       setData(data.filter((item) => item.id !== id));
     } catch (err) {
       console.log(err);
     }
   };
-
+ const handleOnchange = (e) =>{
+  const loca = e.target.value;
+  //console.log(loca+"---"+providerData.providerName)
+  const unsub = onSnapshot(
+    collection(db, "cabDrivers"),
+    (snapShot) => {
+      let list = [];
+      snapShot.docs.forEach((doc) => {
+        const newDoc = doc.data();
+        if(newDoc.providerName === providerData.providerName && newDoc.serviceArea === loca)
+        list.push({ id: doc.id, ...doc.data() });
+      });
+      setData(list);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+ }
   const actionColumn = [
     {
       field: "action",
@@ -72,10 +97,9 @@ const DriverDatatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            {/* <Link to={`/airline/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton" onClick={() => seteditBox(true)}>Edit</div>
-              {editBox === true && <Edituser userData={data} seteditBox = {seteditBox} inputs={userInputs} title="Edit User"/>}
-            </Link> */}
+            <Link to={`/transportProvider/CabDrivers/${params.row.id}`} style={{ textDecoration: "none" }}>
+              <div className="viewButton">Assign Cab</div>
+            </Link>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
@@ -104,11 +128,28 @@ const DriverDatatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New Crew
-        <Link to="/transport/CabProviders" className="link">
+        {t("driverlist")}
+        <Link to="/transportProvider/NewCabDriver" className="link">
           Add New
         </Link>
       </div>
+      <div className="SearchDiv">
+      <div className="formInput">
+          <label>Select Location</label>
+          <select
+          className="mt-4" id="TPlocation" name="TPlocation"
+          onChange={handleOnchange} >
+              {
+              userData.map((item) => {
+                  return(
+                    <option value={item.LocationName}
+                    key={item.LocationId}>{item.LocationName}</option>
+                    )
+                  })
+                }
+          </select>
+        </div>
+        </div>
       <DataGrid
         className="datagrid"
         rows={data}

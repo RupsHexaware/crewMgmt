@@ -21,6 +21,7 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    
   }
   .SearchDiv{
     width: 100%;
@@ -29,7 +30,6 @@
     margin: 10px;
     display: inline-flex;
     align-items: center;
-    padding: 20px 40px;
     justify-content: space-evenly;
 
     .link{
@@ -69,6 +69,14 @@
       color: goldenrod;
       background-color: rgba(189, 189, 3, 0.103);
     }
+    &.Approved {
+      color: green;
+      background-color: rgba(0, 128, 0, 0.151);
+    }
+    &.Pending{
+      color: goldenrod;
+      background-color: rgba(189, 189, 3, 0.103);
+    }
   }
 
   .cellAction {
@@ -91,5 +99,12 @@
       border: 1px dotted rgba(220, 20, 60, 0.6);
       cursor: pointer;
     }
+  }
+  .formInput{
+    height: 40px;
+    border: none;
+    margin: 30px;
+    width: 300px;
+    
   }
 }

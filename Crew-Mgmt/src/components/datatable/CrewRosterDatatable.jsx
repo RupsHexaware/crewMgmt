@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -8,21 +7,53 @@ import {
   Appointments,
   Toolbar,
   ViewSwitcher,
-  MonthView,
+  MonthView,DateNavigator,TodayButton
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { useParams } from 'react-router-dom';
+import { db } from "../../firebase";
 
 const CrewRoster = () => {
     const {t} = useTranslation();
+    const {flightId} = useParams();
+    const [data, setData] = useState([]);
+
+//console.log(flightId)
+  useEffect(() => {
+    const unsub = onSnapshot(
+      collection(db, "roster_events"),
+      (snapShot) => {
+        let list = [];
+        snapShot.docs.forEach((doc) => {
+          const newDoc = doc.data();
+          console.log(newDoc.memberID)
+          if(newDoc.memberID === flightId){
+            list.push({ id: doc.id, ...doc.data() });
+            //setStartDate(newDoc.startDate);
+          }    
+        });
+        setData(list);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    return () => {
+      unsub();
+    };
+  }, []);
 const currentDate = new Date();
+//console.log(startDate)
 const schedulerData = [
   { startDate: '2022-07-18 08:15', title: 'Departure From Mumbai Airport' },
   { startDate: '2022-07-18 09:25', title: 'Arrival at Pune Airport' },
   { startDate: '2022-07-18 09:45', title: 'pick Up from Pune Airport' },
   { startDate: '2022-07-18 11:00', title: 'Drop at Hotel Radison' },
 ];
-const [data , setData] = useState();
+
 const [currentViewName, setcurrentViewName] = useState();
 
     return(
@@ -32,7 +63,7 @@ const [currentViewName, setcurrentViewName] = useState();
           </div>
     <Paper>
     <Scheduler
-      data={schedulerData}
+      data={data}
       height={660}
     >
       <ViewState
@@ -40,15 +71,12 @@ const [currentViewName, setcurrentViewName] = useState();
         currentViewName={currentViewName}
         //onCurrentViewNameChange={currentViewNameChange}
       />
-
-      <WeekView
-        startDayHour={0}
-        endDayHour={24}
-      />
+      <WeekView/>
       <MonthView />
       <DayView />
-
       <Toolbar />
+      <DateNavigator />
+      <TodayButton />
       <ViewSwitcher />
       <Appointments />
     </Scheduler>

@@ -12,8 +12,10 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useTranslation } from "react-i18next";
 
 const CrewMemberDatatable = () => {
+  const {t}=useTranslation();
     const { crewId } = useParams()
   const [data, setData] = useState([]);
 //console.log(crewId)
@@ -102,9 +104,9 @@ const CrewMemberDatatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        In Flight Crew Members List
+        {t("inFlight")}
         <Link to={`/airline/newCrewMembers/${crewId}`} className="link">
-          Add Member
+          {t("newMember")}
         </Link>
       </div>
       <DataGrid

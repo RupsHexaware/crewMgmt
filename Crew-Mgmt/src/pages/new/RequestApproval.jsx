@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Sidebar from "../../components/sidebar/AirlineSidebar";
+import Sidebar from "../../components/sidebar/TransportSidebar";
 import Navbar from "../../components/navbar/Navbar";
 import FormInput from "../../components/commonInput/FormInput";
 import { logisticCrewInput } from "../../formSource";
@@ -19,20 +19,19 @@ import { useParams ,useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
-const CrewLogisticArrangement = ({ title }) => {
+const RequestApproval = ({ title }) => {
   const [data, setData] = useState([]);
   const [cabData, setcabData] = useState([]);
   const [empData, setempData] = useState([]);
   const [empName, setEmpName] = useState('');
-  const [empCode, setempCode] = useState('');
   const [pickupTime,setpickupTime] = useState('');
   const [dropTime, setDropTime] = useState('');
   const [dropLocation, setDropLocation] = useState('');
   const [cabTyp ,setcabTyp] = useState('')
   const [cab ,setCab] = useState('')
-  const { crewId } = useParams();
+  const { memberId } = useParams();
   const navigate = useNavigate()
-  // console.log(crewId);
+  // console.log(memberId);
 
   useEffect(() => {
     const empData = onSnapshot(
@@ -42,13 +41,12 @@ const CrewLogisticArrangement = ({ title }) => {
         snapShot.docs.forEach((doc) => {
           const newDoc = doc.data();
           //console.log(crewId +"------"+doc.id)
-          if (crewId === doc.id) {
+          if (memberId === doc.id) {
             // emplist.push({id :doc.id ,...doc.data() });
             setempData(newDoc);
             setEmpName(newDoc.empName);
-            setempCode(newDoc.empCode)
-            setpickupTime(newDoc.FlightArrival)
-
+            setpickupTime(newDoc.pickupstartDate);
+            setDropLocation(newDoc.dropLocation)
           }
         })
       }
@@ -101,35 +99,35 @@ const CrewLogisticArrangement = ({ title }) => {
     e.preventDefault();
     const id = uuidv4();
     const id2 = uuidv4();
-   // console.log(empName+"--PT----"+pickupTime+"_____DL_____"+dropLocation+"===DT====="+dropTime+"----CT---"+cabTyp+"------CAB----"+cab)
+   //console.log(empData.empName+""+empData.memberId+"--PT----"+pickupTime+"_____DL_____"+dropTime+"===DT====="+empData.pickupTitle+"----CT---"+empData.dropTitle)
     //(id);
-    const pickupstartDate = empData.flightDate+" "+pickupTime;
-    const pickupTitle = "Pick Up From "+empData.Destination+" Airport. Car Details " +cab
+    const dropTitle = "Drop At "+ dropLocation;
     const dropStartDate = empData.flightDate+" "+dropTime;
-    const dropTitle = "Drop At "+dropLocation;
-   // console.log(crewId +"crewId olll")
+    const newPickupTitle = empData.pickupTitle + " " +cab;
+    console.log(empData.memberId +"crewId olll" + pickupTime +" ---- " + newPickupTitle )
+    console.log(empData.memberId +"crewId olll" + dropStartDate +" ---- " + cab )
      try {
       //Pick Up Event
-    //   await setDoc(doc(db, "roster_events",id), {
-    //     memberID : empData.memberId,
-    //     startDate : pickupstartDate,
-    //     title : pickupTitle,
-    //   });
-    // //   //Drop Event
-    //   await setDoc(doc(db,"roster_events",id2),{
-    //     memberID : empData.memberId,
-    //     startDate : dropStartDate,
-    //     title : dropTitle,
-    //   });
-    await updateDoc(doc(db,"allotedCrewForFlight",crewId),{
-      pickupstartDate: pickupstartDate,
-      pickupTitle : pickupTitle,
-      dropLocation : dropLocation,
-      transSatus : "Pending",
-      isRequested : "1",
-    })
-      //console.log("Events Created")
-       navigate(-1)
+      await setDoc(doc(db, "roster_events",id), {
+        memberID : empData.memberId,
+        startDate : pickupTime,
+        title : newPickupTitle,
+      });
+    //   //Drop Event
+      await setDoc(doc(db,"roster_events",id2),{
+        memberID : empData.memberId,
+        startDate : dropStartDate,
+        title : dropTitle,
+      });
+      // updating Previous Table for table Data 
+        await updateDoc(doc(db,"allotedCrewForFlight",memberId),{
+            transSatus : "Approved",
+            dropStartDate : dropStartDate,
+            dropTitle : dropTitle,
+            assignedCab : cab,
+        });
+     alert("Events Created")
+        navigate(-1)
     } catch (err) {
       console.log(err);
     }
@@ -145,16 +143,13 @@ const CrewLogisticArrangement = ({ title }) => {
         <div className="bottom">
           <div className="right">
             <form onSubmit={handleSubmit}>
-              
-              <FormInput type="text" label="Employee Code" placeholder={"Employee Code"} value={empCode}
-                onChange={(e) => setempCode(e.target.value)} />
               <FormInput type="text" label="Employee Name" placeholder={"Employee Name"} value={empName}
                 onChange={(e) => setEmpName(e.target.value)} disabled />
-              <FormInput type="time" label="PickUp From Airport" placeholder={"PickUp Time"} value={pickupTime}
-                onChange={(e) => setpickupTime(e.target.value)}/>
+              <FormInput type="text" label="PickUp Date And Time" placeholder={"PickUp Time"} value={pickupTime}
+                onChange={(e) => setpickupTime(e.target.value)} disabled/>
               <FormInput type="text" label="Drop Location" placeholder={"Drop Location"} value={dropLocation}
                 onChange={(e) => setDropLocation(e.target.value)} />
-              {/* <FormInput type="time" label="Drop Time" placeholder={"Drop Time"} value={dropTime}
+              <FormInput type="time" label="Drop Time" placeholder={"Drop Time"} value={dropTime}
                 onChange={(e) => setDropTime(e.target.value)} />
               <div className="formInput">
                 <label>Cab Type</label>
@@ -185,9 +180,9 @@ const CrewLogisticArrangement = ({ title }) => {
                     })
                   }
                 </select>
-              </div> */}
-             
-              <FormButton type="submit">Save</FormButton>
+              </div>
+              <FormButton type="submit">Approve</FormButton>
+              {/* <FormButton type="submit">Reject</FormButton> */}
             </form>
           </div>
         </div>
@@ -196,4 +191,4 @@ const CrewLogisticArrangement = ({ title }) => {
   )
 }
 
-export default CrewLogisticArrangement
+export default RequestApproval

@@ -53,6 +53,9 @@ const Login = ({ inputs, title }) => {
                   //alert("crew Admin")
                   dispatch({type:"LOGINAIRLINE", payload:user})
                   navigate("/airline")
+                }else if(newDoc.role === "Transport Provider"){
+                  dispatch({type:"LOGINPROVIDER", payload:user})
+                  navigate("/transportProvider")
                 }else{
                   dispatch({type:"LOGIN", payload:user})
                   navigate("/home")
@@ -97,7 +100,7 @@ const Login = ({ inputs, title }) => {
               {/* <button type="submit">
                 Submit
               </button> */}
-              <FormButton type="submit">Submit</FormButton>
+              <FormButton type="submit">Sign In</FormButton>
               <div className="eror">{error && <a>Wrong email or password!</a>}</div>
               <p><Link to='/forgotPassword'style={{ textDecoration: "none" }}>Forgot Password ?</Link></p>
               {/* <input type="checkbox" label="Remember Me"/> */}

@@ -147,9 +147,9 @@ const New = ({ inputs, title }) => {
                   <option value="In Active">In Active</option>
                 </select>
               </div>
-              <Dropdowm 
+              {/* <Dropdowm 
               id = {inputs.id}
-              />
+              /> */}
               <div className="formInput">
                 <label>Role</label>
                 <select className="mt-4" id="role" value={role.value} onChange={handleInput}>

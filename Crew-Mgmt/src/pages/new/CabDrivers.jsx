@@ -1,4 +1,4 @@
-import Sidebar from "../../components/sidebar/TransportSidebar";
+import Sidebar from "../../components/sidebar/TransportProviderSidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
@@ -18,7 +18,8 @@ import FormInput from "../../components/commonInput/FormInput";
 import FormButton from "../../components/commonInput/FormButtons";
 
 const NewCabDriver = ({ inputs, title }) => {
-  const { crewId } = useParams();
+  let user = JSON.parse(localStorage.getItem('user'));
+  //console.log(user)
   const [file, setFile] = useState("");
   const [data, setData] = useState({
     firstName: "",
@@ -26,10 +27,45 @@ const NewCabDriver = ({ inputs, title }) => {
   const [per, setPerc] = useState(null);
   const [userData, setUserData] = useState([]);
   const [assignedCab , setassignedCab] = useState("");
+  const [driverId,setDriverId] = useState("")
+  const [location, setLocation] = useState([]);
+  const [serviceArea, setServiceArea] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     //console.log(flightNo)
+    const unsub = onSnapshot(
+      collection(db, "Locations"),
+      (snapShot) => {
+        let list = [];
+        snapShot.docs.forEach((doc) => {
+          const newDoc = doc.data();
+          list.push({ id: doc.id, ...doc.data() });
+          //console.log(newDoc.arrival)
+        });
+        setLocation(list); 
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    const userDataa = onSnapshot(
+      collection(db, "transport_provider"),
+      (snapShot) => {
+        let list = [];
+        snapShot.docs.forEach((doc) => {
+          const newDoc = doc.data();
+          if(newDoc.email === user.email){
+            setUserData(newDoc);
+          }
+          //console.log(newDoc.arrival)
+        });
+         
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     const uploadFile = () => {
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, file.name);
@@ -76,12 +112,20 @@ const NewCabDriver = ({ inputs, title }) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    //console.log(data)
     try {
       const id = uuidv4();
-      //console.log(file)
+      let userid = Number(new Date());
+      const userId = "CAB"+String(userid).slice(-4);
+      //console.log(userData)
       const res = await setDoc(doc(db, "cabDrivers",id), {
         ...data,
+        userId : userId,
+        serviceArea : serviceArea,
+        AssignedCab : "NA",
+        status : "Active",
         timeStamp: serverTimestamp(),
+        providerName: userData.providerName
       });
       navigate(-1)
     } catch (err) {
@@ -131,13 +175,18 @@ const NewCabDriver = ({ inputs, title }) => {
               ))}
               {/* //<button >Save</button> */}
               <div className="formInput">
-                <label>Status</label>
-                <select className="mt-4" id="assignedCab" value={assignedCab.value} onChange={handleInput}>
-                  <option value="Select Value">Select Value</option>
-                  <option value="Active" Selected>Active</option>
-                  <option value="In Active">In Active</option>
-                </select>
-              </div>
+                    <label>Service Area Airport</label>
+                        <select className="mt-4" id="serviceArea" name="serviceArea" 
+                        value={serviceArea} onChange={(e) => {setServiceArea(e.target.value)}}  >
+                            { location.map((item) => {
+                                return(
+                                    <option value={item.LocationName}
+                          key={item.locationId}>{item.LocationName }</option>
+                                    )
+                                })
+                            }
+                        </select>
+                </div>
               <FormButton type="submit">Save</FormButton>
             </form>
           </div>

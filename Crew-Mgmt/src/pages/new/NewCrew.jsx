@@ -9,7 +9,7 @@ import {
   doc,
   serverTimestamp,
   set,
-  setDoc,
+  setDoc, onSnapshot
 } from "firebase/firestore";
 import { auth, db, storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -21,9 +21,14 @@ const NewCrew = ({ inputs, title }) => {
   const [data, setData] = useState({
     airline : "",
   });
+  
   const navigate = useNavigate();
 
  // console.log(data);
+
+ useEffect(() =>{
+ 
+ })
 
   const handleInput = (e) => {
     const id = e.target.name;
@@ -65,7 +70,8 @@ const NewCrew = ({ inputs, title }) => {
                     onChange={handleInput}
                   />
               ))}
-              <button type="submit" class="btn">Save</button>
+              
+              <button type="submit" class="btn">Sasve</button>
             </form>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import "./list.scss"
-import Sidebar from "../../components/sidebar/TransportSidebar"
+import Sidebar from "../../components/sidebar/TransportProviderSidebar"
 import Navbar from "../../components/navbar/Navbar"
 import Datatable from "../../components/datatable/DriverDatatable"
 

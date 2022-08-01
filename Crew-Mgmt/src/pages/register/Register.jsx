@@ -67,14 +67,16 @@ const Register = ({ inputs, title }) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    const password = "12345678";
     try {
       const res = await createUserWithEmailAndPassword(
         auth,
         data.email,
-        data.password
+        password
       );
       await setDoc(doc(db, "users", res.user.uid), {
         ...data,
+        password : password,
         timeStamp: serverTimestamp(),
         status : "Pending",
         role : "NA"
@@ -128,7 +130,7 @@ const Register = ({ inputs, title }) => {
                 </div>
               ))}
               <button disabled={per !== null && per < 100} type="submit">
-                Send
+                Register
               </button>
             </form>
           </div>

@@ -1,17 +1,18 @@
 import "./datatable.scss";
 import { DataGrid ,GridToolbar} from "@mui/x-data-grid";
-import { crewColumnsForLogistic, userRows } from "../../datatablesource";
-import { Link } from "react-router-dom";
+import { crewColumnsForLogisticApproval, userRows } from "../../datatablesource";
+import { Link ,useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { userInputs } from "../../formSource";
 import { useTranslation } from "react-i18next";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   collection,
   getDocs,
   deleteDoc,
   doc,
-  onSnapshot,
+  onSnapshot,updateDoc,setDoc
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import FormInput from "../commonInput/FormInput";
@@ -20,7 +21,7 @@ import FormButton from "../commonInput/FormButtons";
 
 
 
-const CrewListForLogistic = () => {
+const TransportLogisticArrangement = () => {
   const [data, setData] = useState([]);
   const [flightList, setlightList] = useState([]);
   const [tableData, settableData] = useState([]);
@@ -28,11 +29,16 @@ const CrewListForLogistic = () => {
   const today = new Date();
   var dateString = moment(today).format('YYYY-MM-DD');
   const [date,setDate] = useState(dateString);
-  
-  const [editBox , seteditBox] = useState(false);
+  const [pickupTime,setPickupTime] = useState('');
+  const [pickupTitle,setPickupTitle] = useState('');
+  const [dropTitle,setDropTitle] = useState('');
+  const [dropStartDate,setDropStartDate] = useState('');
   const {t} = useTranslation();
-  useEffect(() => {
- 
+
+  //console.log(params.row.id)
+  const navigate = useNavigate();
+
+    useEffect(() => {
     // LISTEN (REALTIME)
     const unsub = onSnapshot(
       collection(db, "Locations"),
@@ -87,7 +93,7 @@ const handleOnchangeLocation = (e) =>{
       snapShot.docs.forEach((doc) => {
         const newDoc = doc.data();
         //console.log(newDoc.flightNo+"-------"+flightno)
-        if(newDoc.flightNo === flightno){
+        if(newDoc.flightNo === flightno && newDoc.isRequested === "1"){
           //console.log("inside ")
           list.push({ id: doc.id, ...doc.data() });
         }
@@ -99,7 +105,6 @@ const handleOnchangeLocation = (e) =>{
     }
   );
 }
-
 const statusColumn = [
   {
     field : "status",
@@ -122,8 +127,8 @@ const statusColumn = [
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/airline/logisticArrangement/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <FormButton disabled={params.row.isRequested === "1"}className="viewButton">Create Request</FormButton>
+            <Link to={`/transport/CrewListForApproval/${params.row.id}`} style={{ textDecoration: "none" }}>
+              <FormButton disabled={params.row.transSatus === "Approved"}className="viewButton">Approve</FormButton>
             </Link>
           </div>
         );
@@ -148,11 +153,11 @@ const statusColumn = [
   return (
     <div className="datatable">
       <div className="datatableTitle">
-      {t("logisticArrangement")} 
+      {t("logisticArrangementApproval")} 
       </div>
       <div className="SearchDiv">
       <div className="formInput">
-          <label>Arrival City</label>
+          <label>Select Location</label>
           <select
           className="mt-4" id="status"
           onChange={handleOnchange} >
@@ -186,7 +191,7 @@ const statusColumn = [
       <DataGrid
         className="datagrid"
         rows={tableData}
-        columns={crewColumnsForLogistic.concat(statusColumn,actionColumn)}
+        columns={crewColumnsForLogisticApproval.concat(statusColumn,actionColumn)}
         pageSize={10}
         rowsPerPageOptions={[10]}
         checkboxSelection
@@ -202,4 +207,4 @@ const statusColumn = [
   );
 };
 
-export default CrewListForLogistic;
+export default TransportLogisticArrangement;

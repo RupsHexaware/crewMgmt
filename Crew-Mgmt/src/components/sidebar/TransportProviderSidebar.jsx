@@ -11,7 +11,7 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-const TransportSidebar = () => {
+const TransportProviderSidebar = () => {
   const {t} = useTranslation();
   let user = JSON.parse(localStorage.getItem('user'));
   //console.log(user)
@@ -25,34 +25,39 @@ const TransportSidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/transport" style={{ textDecoration: "none" }}>
-          <span className="logo">{t("trLogo")}</span>
+        <Link to="/transportProvider" style={{ textDecoration: "none" }}>
+          <span className="logo">{t("trpLogo")}</span>
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
           <p className="title">{t("main")}</p>
-          <Link to="/transport" style={{ textDecoration: "none" }}>
+          <Link to="/transportProvider" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
             <span>{t("dashboard")}</span>
           </li>
           </Link>
           <p className="title">{t("lists")}</p>
-          <Link to="/transport/trnsprtPvder" style={{ textDecoration: "none" }}>
-          <li>
-            <TaxiAlertIcon className="icon" />
-            <span>{t("trpPrvdr")}</span>
-          </li>
+          <Link to="/transportProvider/CabDrivers" style={{ textDecoration: "none" }}>
+            <li>
+              <PersonOutlineIcon className="icon" />
+              <span>{t("mngDr")}</span>
+            </li>
           </Link>
-          <Link to="/transport/CrewListForApproval" style={{ textDecoration: "none" }}>
+          <Link to="/transportProvider/cabDetails" style={{ textDecoration: "none" }}>
+             <li>
+              <DirectionsCarIcon className="icon" />
+              <span>{t("viCbdtls")}</span>
+            </li>
+          </Link>
+          <Link to="/transportProvider/CrewListForApproval" style={{ textDecoration: "none" }}>
           <li>
             <EmojiTransportationIcon className="icon" />
             <span>{t("logArngmt")}</span>
           </li>
           </Link>
-          
           {/* <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>
@@ -80,7 +85,7 @@ const TransportSidebar = () => {
             <span>Settings</span>
           </li> */}
           <p className="title">{t("user")}</p>
-          <Link to="/transport/transportProfile" style={{ textDecoration: "none" }}>
+          <Link to="/transportProvider/transportProviderProfile" style={{ textDecoration: "none" }}>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>{t("prfl")}</span>
@@ -109,4 +114,4 @@ const TransportSidebar = () => {
   );
 };
 
-export default TransportSidebar;
+export default TransportProviderSidebar;
